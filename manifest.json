@@ -1,0 +1,11 @@
+{
+	"id": "simple-timelines",
+	"name": "Simple Timelines",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Simple Timeline viewer using tags",
+	"author": "Slimbu",
+	"authorUrl": "",
+	"fundingUrl": "",
+	"isDesktopOnly": false
+}
