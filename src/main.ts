@@ -1,6 +1,6 @@
 import { Plugin, } from 'obsidian';
-import {TimelineSettings } from 'settings';
-import { TIMELINE_VIEW, TimelineView } from 'view';
+import {TimelineSettings } from 'src/settings';
+import { TIMELINE_VIEW, TimelineView } from 'src/view';
 
 interface TimelinePluginSettings {
   searchTag: string;
