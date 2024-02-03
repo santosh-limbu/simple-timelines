@@ -62,14 +62,19 @@ export class TimelineView extends ItemView {
   // Create a list item for each tagged file.
   createListItem(container: HTMLElement, file: TFile) {
     const listItem = container.createEl('li'); // Create a new list item.
-
     listItem.createEl('span', { text: file.basename }); // Add the file name as the list item's text.
 
-    // Add a click event listener to open the file.
+    // Add a click event listener to open the file in an existing view if possible.
     listItem.addEventListener('click', () => {
-      this.app.workspace.openLinkText(file.path, file.path, 'tab');
+      const existingView = this.app.workspace.getLeavesOfType('markdown').find(leaf => leaf.view.getState().file === file.path);
+      if (existingView) {
+        this.app.workspace.setActiveLeaf(existingView, false, true);
+      } else {
+        this.app.workspace.openLinkText(file.path, file.path, 'tab');
+      }
     });
   }
+
 
   // Called when the view is closed.
   async onClose() {
