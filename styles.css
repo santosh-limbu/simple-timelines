@@ -18,20 +18,26 @@
   
   .timeline-date {
     font-weight: bold;
-    color: #929292; /* Dark text color for contrast */
-    margin-right: 10px;
+    margin-right: 15px;
   }
   
   .timeline-title {
-    color: #bebebe;
     flex: 1; /* Make title take up the remaining space */
   }
   
   /* Hover effect for cards */
   .timeline-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
+
+  .note-content {
+    background-color: #f8f8f800; /* Light background for the content area */
+    border-left: 3px solid #d3d3d3; /* Left border to distinguish content from the card */
+    padding: 10px; /* Padding inside the content area */
+    margin-top: 10px; /* Space between the card and the content */
+    display: none; /* Start hidden until toggled */
+  }  
   
   /* Responsive design for smaller screens */
   @media (max-width: 768px) {
