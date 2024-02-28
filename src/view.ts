@@ -30,7 +30,7 @@ export class TimelineView extends ItemView {
   
     // Create list items for each tagged file
     taggedFiles.forEach((file: TFile) => {
-      this.createListItem(listContainer, file);
+      this.createCardItem(listContainer, file);
     });
   }
   
@@ -52,13 +52,16 @@ export class TimelineView extends ItemView {
   }
 
   // Create a list item for each tagged file.
-  createListItem(container: HTMLElement, file: TFile) {
-    const listItem = container.createEl('li'); // Create a new list item.
-
-    listItem.createEl('span', { text: file.basename }); // Add the file name as the list item's text.
+  createCardItem(container: HTMLElement, file: TFile) {
+    // Create a new div element for the card
+    const cardItem = container.createEl('div', { cls: 'timeline-card' });
+  
+    // Create a div or span for the date and another for the title
+    const dateEl = cardItem.createEl('div', { cls: 'timeline-date', text: 'Date Here' });
+    const titleEl = cardItem.createEl('div', { cls: 'timeline-title', text: file.basename });
 
     // Add a click event listener to open the file in the existing pane or a new pane.
-    listItem.addEventListener('click', () => {
+    cardItem.addEventListener('click', () => {
       const existingView = this.app.workspace.getLeavesOfType('markdown').find(leaf => leaf.view.getState().file === file.path);
       if (existingView) {
         this.app.workspace.setActiveLeaf(existingView);
