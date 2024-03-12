@@ -24,6 +24,9 @@ export class TimelineView extends ItemView {
     const container = this.containerEl.children[1];
     container.empty();
     
+    const filterContainer = container.createEl('div', {cls: 'timeline-header'});
+    filterContainer.setText("Test Timeline");
+
     const listContainer = container.createEl('ul');
   
     // Fetch all files with the "#timeline" tag
@@ -89,10 +92,10 @@ export class TimelineView extends ItemView {
         }
         
         noteContentEl.style.display = 'block';
-        dropdownButton.setText('▲'); // Change button text to indicate content is shown
+        dropdownButton.setText('^'); // Change button text to indicate content is shown
       } else {
         noteContentEl.style.display = 'none';
-        dropdownButton.setText('▼'); // Change button text to indicate content is hidden
+        dropdownButton.setText(''); // Change button text to indicate content is hidden
       }
     });
 
