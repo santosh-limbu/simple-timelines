@@ -1,5 +1,6 @@
 import { ItemView, WorkspaceLeaf, TFile} from 'obsidian';
 import TimelinePlugin from './main';
+import { text } from 'stream/consumers';
 
 export const TIMELINE_VIEW = 'timeline-view';
 
@@ -23,6 +24,9 @@ export class TimelineView extends ItemView {
     const container = this.containerEl.children[1];
     container.empty();
     
+    const filterContainer = container.createEl('div', {cls: 'timeline-header'});
+    filterContainer.setText("Test Timeline");
+
     const listContainer = container.createEl('ul');
   
     // Fetch all files with the "#timeline" tag
@@ -30,7 +34,7 @@ export class TimelineView extends ItemView {
   
     // Create list items for each tagged file
     taggedFiles.forEach((file: TFile) => {
-      this.createListItem(listContainer, file);
+      this.createCardItem(listContainer, file);
     });
   }
   
@@ -52,13 +56,55 @@ export class TimelineView extends ItemView {
   }
 
   // Create a list item for each tagged file.
-  createListItem(container: HTMLElement, file: TFile) {
-    const listItem = container.createEl('li'); // Create a new list item.
+  createCardItem(container: HTMLElement, file: TFile) {
+    // Create a new div element for the card
+    const cardItem = container.createEl('div', { cls: 'timeline-card' });
+  
+    // Create a div or span for the date and another for the title
+    const dateEl = cardItem.createEl('div', { cls: 'timeline-date', text: 'Date Here' });
+    const titleEl = cardItem.createEl('div', { cls: 'timeline-title', text: file.basename });
+    // Create a button for the dropdown
+    const dropdownButton = cardItem.createEl('button', { cls: 'dropdown-button' });
+    dropdownButton.setText('▼'); // Set text or icon for dropdown button
 
-    listItem.createEl('span', { text: file.basename }); // Add the file name as the list item's text.
+    // Add event listener to the button to toggle the note content on click
+    dropdownButton.addEventListener('click', async () => {
+      // Toggle visibility of the note content
+      const isDisplayed = noteContentEl.style.display !== 'none';
+      
+      // If content is not displayed, fetch and display it
+      if (!isDisplayed) {
+        if (!dropdownButton.classList.contains('is-loaded')) {
+          // Fetch the content of the file
+          let content = await this.app.vault.read(file);
+    
+          // Remove the metadata from the content
+          const metadataRegex = /^---\s*\n[\s\S]+?\n---\s*\n/;
+          content = content.replace(metadataRegex, '');
+
+          // Remove specific tags like "#timeline"
+          const tagRegex = /#timeline\b/g;
+          content = content.replace(tagRegex, '');
+    
+          // Set the content to the noteContentEl and mark as loaded
+          noteContentEl.setText(content);
+          dropdownButton.classList.add('is-loaded'); // Mark as loaded
+        }
+        
+        noteContentEl.style.display = 'block';
+        dropdownButton.setText('^'); // Change button text to indicate content is shown
+      } else {
+        noteContentEl.style.display = 'none';
+        dropdownButton.setText(''); // Change button text to indicate content is hidden
+      }
+    });
+
+    const noteContentEl = container.createEl('div', { cls: 'note-content', attr: { style: 'display: none;' }});
+
+    container.appendChild(noteContentEl);
 
     // Add a click event listener to open the file in the existing pane or a new pane.
-    listItem.addEventListener('click', () => {
+    cardItem.addEventListener('click', () => {
       const existingView = this.app.workspace.getLeavesOfType('markdown').find(leaf => leaf.view.getState().file === file.path);
       if (existingView) {
         this.app.workspace.setActiveLeaf(existingView);

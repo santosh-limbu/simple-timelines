@@ -1,4 +1,4 @@
-import { Plugin, } from 'obsidian';
+import { Plugin, WorkspaceLeaf, } from 'obsidian';
 import {TimelineSettings } from 'src/settings';
 import { TIMELINE_VIEW, TimelineView } from 'src/view';
 
@@ -43,7 +43,7 @@ export default class TimelinePlugin extends Plugin {
   
   openView() {
     this.app.workspace.detachLeavesOfType(TIMELINE_VIEW)
-    const leaf = this.app.workspace.getRightLeaf(false)
+    const leaf = this.app.workspace.createLeafBySplit(this.app.workspace.getLeaf(), 'vertical', false);
 
     leaf.setViewState({
         type: TIMELINE_VIEW,

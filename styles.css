@@ -1,8 +1,54 @@
-/*
+/* Container holding all cards */
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adjust the space between cards */
+  }
+  
+  /* Individual card styling */
+  .timeline-card {
+    background-color: hsla(0, 0%, 100%, 0); /* Card background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 15px; /* Space inside the card */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .timeline-date {
+    font-weight: bold;
+    margin-right: 15px;
+  }
+  
+  .timeline-title {
+    flex: 1; /* Make title take up the remaining space */
+  }
+  
+  /* Hover effect for cards */
+  .timeline-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
-
-If your plugin does not need CSS, delete this file.
-
-*/
+  .note-content {
+    background-color: #f8f8f800; /* Light background for the content area */
+    border-left: 3px solid #d3d3d3; /* Left border to distinguish content from the card */
+    padding: 10px; /* Padding inside the content area */
+    margin-top: 10px; /* Space between the card and the content */
+    display: none; /* Start hidden until toggled */
+  }  
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .cards-container {
+      flex-direction: column;
+    }
+  }
+  
+  .timeline-header {
+    border: 1px solid #cccccc; /* Example border */
+    padding: 10px;
+    margin-bottom: 10px; /* Space between header and list */
+    /* Additional styling */
+  }
