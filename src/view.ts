@@ -92,10 +92,10 @@ export class TimelineView extends ItemView {
         }
         
         noteContentEl.style.display = 'block';
-        dropdownButton.setText('^'); // Change button text to indicate content is shown
+        dropdownButton.setText('⯅'); // Change button text to indicate content is shown
       } else {
         noteContentEl.style.display = 'none';
-        dropdownButton.setText(''); // Change button text to indicate content is hidden
+        dropdownButton.setText('⯆'); // Change button text to indicate content is hidden
       }
     });
 
